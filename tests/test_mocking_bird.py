@@ -14,10 +14,12 @@ except ImportError:
 class TestMockingBird(TestCase):
 
     # TODO patch here
-    def test_mocking_bird_when_sing_then_get_song(self):
-        # Arrange
+    @patch('mocking.bird.random.randint')
+    def test_mocking_bird_when_sing_then_get_song(self, mock_randint):
+       # Arrange
         bird = Bird()
         # TODO set patch object's return value(s)
+        mock_randint.return_value = 2
 
         # Act
         result = bird.sing()
@@ -26,11 +28,13 @@ class TestMockingBird(TestCase):
         assert result == "chirp chirp"
 
     # TODO patch here
-    def test_mocking_bird_when_dont_sing_then_get_diamond_ring_exception(self):
+    @patch('mocking.bird.random.randint')
+    def test_mocking_bird_when_dont_sing_then_get_diamond_ring_exception(self, mock_randint):
         # Arrange
         bird = Bird()
         # TODO set patch object's return value(s)
-
+        mock_randint.return_value = 1
+        
         # Act
         # Assert
         self.assertRaises(DiamondRingException, bird.sing)
