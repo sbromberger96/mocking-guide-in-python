@@ -17,11 +17,13 @@ except ImportError:
 class TestMockingMe(TestCase):
 
     # TODO patch here
-    def test_mocking_me_via_gif_when_resp_200_then_get_gif(self):
+    @patch('mocking.me.requests.post')
+    def test_mocking_me_via_gif_when_resp_200_then_get_gif(self, mock_post):
         # Arrange
         name = 'First Last'
         # TODO set patch object's return value(s)
-
+        mock_post.return_value.status_code = 200
+        mock_post.return_value.content = "gif content"
         # Act
         result = via_gif(name)
 
@@ -29,10 +31,12 @@ class TestMockingMe(TestCase):
         assert result == "gif content"
 
     # TODO patch here
-    def test_mocking_me_via_gif_when_resp_not_200_then_Exception(self):
+    @patch('mocking.me.requests.post')
+    def test_mocking_me_via_gif_when_resp_not_200_then_Exception(self, mock_post):
         # Arrange
         name = 'First Last'
         # TODO set patch object's return value(s)
+        mock_post.return_value.status_code = 500
 
         # Act
         # Assert
